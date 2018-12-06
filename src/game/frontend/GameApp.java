@@ -32,6 +32,7 @@ public class GameApp extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
+		System.out.println(chosenClass);
 		CandyGame game = new CandyGame(chosenClass);
 		CandyFrame frame = new CandyFrame(game);
 		Scene scene = new Scene(frame);

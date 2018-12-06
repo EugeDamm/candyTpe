@@ -4,6 +4,7 @@ import game.backend.cell.Cell;
 import game.backend.element.Candy;
 import game.backend.element.CandyColor;
 import game.backend.element.Element;
+import game.backend.move.Direction;
 import game.backend.move.Move;
 import game.backend.move.MoveMaker;
 
@@ -45,8 +46,22 @@ public abstract class Grid {
 			}
 		}
 		fillCells();
+		printGrid();
 		fallElements();
 	}	
+
+	public void printGrid(){
+		for(int i = 0 ; i < 9 ; i++){
+			for(int j = 0 ; j < 9 ; j++){
+				System.out.println(String.format("Element: %d, %d", i, j));
+				System.out.println("up:" + g()[i][j].getAround()[Direction.UP.ordinal()]);
+				System.out.println("down:" + g()[i][j].getAround()[Direction.DOWN.ordinal()]);
+				System.out.println("left:" + g()[i][j].getAround()[Direction.LEFT.ordinal()]);
+				System.out.println("right:" + g()[i][j].getAround()[Direction.RIGHT.ordinal()]);
+			}
+			System.out.println("\n");
+		}
+	}
 
 	public Element get(int i, int j) {
 		return g[i][j].getContent();

@@ -4,6 +4,7 @@ import game.backend.GameState;
 import game.backend.Grid;
 import game.backend.cell.CandyGeneratorCell;
 import game.backend.cell.Cell;
+import game.backend.element.Gap;
 import game.backend.element.Wall;
 
 public class Level1 extends Grid {
@@ -24,7 +25,7 @@ public class Level1 extends Grid {
 	protected void fillCells() {
 		
 		wallCell = new Cell(this);
-		wallCell.setContent(new Wall());
+		wallCell.setContent(new Gap());
 		candyGenCell = new CandyGeneratorCell(this);
 		
 		//corners
@@ -42,11 +43,11 @@ public class Level1 extends Grid {
 			g()[SIZE-1][j].setAround(g()[SIZE-2][j], wallCell, g()[SIZE-1][j-1],g()[SIZE-1][j+1]);
 		}
 		//left line cells
-		for (int i = 1; i < SIZE-1; i++) {
+		for (int i = 1; i < SIZE-2; i++) {
 			g()[i][0].setAround(g()[i-1][0],g()[i+1][0], wallCell ,g()[i][1]);
 		}
 		//right line cells
-		for (int i = 1; i < SIZE-1; i++) {
+		for (int i = 1; i < SIZE-2; i++) {
 			g()[i][SIZE-1].setAround(g()[i-1][SIZE-1],g()[i+1][SIZE-1], g()[i][SIZE-2], wallCell);
 		}		
 		//central cells

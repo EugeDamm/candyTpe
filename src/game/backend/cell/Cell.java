@@ -15,7 +15,17 @@ public class Cell {
 		this.grid = grid;
 		this.content = new Nothing();
 	}
-	
+
+	@Override
+	public String toString(){
+		System.out.print(content.getKey());
+		return "";
+	}
+
+	public Cell[] getAround(){
+		return around;
+	}
+
 	public void setAround(Cell up, Cell down, Cell left, Cell right) {
 		this.around[Direction.UP.ordinal()] = up;
 		this.around[Direction.DOWN.ordinal()] = down;
