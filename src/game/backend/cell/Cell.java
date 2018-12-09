@@ -1,9 +1,11 @@
 package game.backend.cell;
 
+import game.backend.GameState;
 import game.backend.Grid;
-import game.backend.element.Element;
-import game.backend.element.Nothing;
+import game.backend.element.*;
 import game.backend.move.Direction;
+
+import javax.swing.*;
 
 public class Cell {
 	
@@ -26,12 +28,12 @@ public class Cell {
 		return around;
 	}
 
-	/*public void printAround(){
+	public void printAround(){
 		System.out.println("[" + around[0].getContent().getKey() + "," +
 				around[1].getContent().getKey() + "," +
 				around[2].getContent().getKey() + "," +
 				around[3].getContent().getKey() + "]");
-	}*/
+	}
 
 	public void setAround(Cell up, Cell down, Cell left, Cell right) {
 		this.around[Direction.UP.ordinal()] = up;
@@ -89,10 +91,38 @@ public class Cell {
 		return null;
 	}
 
-	public boolean fallUpperContent() {
+	public boolean isFruitGenerator(){
+		return false;
+	}
+
+	public boolean fallUpperContentWithCondition(GameState state){
 		Cell up = around[Direction.UP.ordinal()];
-		while(!up.getContent().getKey().equals("CANDY")) {
-			up = up.around[Direction.UP.ordinal()];
+		if(state.getFruitsPresent() == 0){
+			if(this.isEmpty() && !up.isEmpty() && up.isMovable()){
+				int i = (int)(Math.random());
+				if(i % 2 == 0)
+					this.content = new Cherry();
+				else
+					this.content = new Nut();
+				grid.wasUpdated();
+				if(this.hasFloor()) {
+					grid.tryRemove(this);
+					return true;
+				} else {
+					Cell down = around[Direction.DOWN.ordinal()];
+					return down.fallUpperContent(state);
+				}
+			}
+		}
+		return fallUpperContent(state);
+	}
+
+	public boolean fallUpperContent(GameState state) {
+		Cell up = around[Direction.UP.ordinal()];
+		if(state.getType().equals("LEVEL3")) {
+			while (!up.getContent().getKey().equals("CANDY")) {
+				up = up.around[Direction.UP.ordinal()];
+			}
 		}
 		if (this.isEmpty() && !up.isEmpty() && up.isMovable()) {
 			this.content = up.getAndClearContent();
@@ -102,7 +132,7 @@ public class Cell {
 				return true;
 			} else {
 				Cell down = around[Direction.DOWN.ordinal()];
-				return down.fallUpperContent();
+				return down.fallUpperContent(state);
 			}
 		} 
 		return false;

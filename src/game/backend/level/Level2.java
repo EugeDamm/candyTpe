@@ -13,8 +13,8 @@ import java.awt.*;
 
 public class Level2 extends Level1 {
     //GAPS
-    private static int REQUIRED_SCORE = 100;
-    private static int MAX_MOVES = 20;
+    private final static int REQUIRED_SCORE = 3000;
+    private final static int MAX_MOVES = 20;
 
     private Cell gapCell;
     private Cell wallCell;
@@ -34,7 +34,7 @@ public class Level2 extends Level1 {
             }
         }
         fillCells();
-        printGrid();
+        //printGrid();
         fallElements();
     }
 
@@ -55,10 +55,16 @@ public class Level2 extends Level1 {
     private class Level2State extends GameState {
         private long requiredScore;
         private long maxMoves;
+        private final String type = "LEVEL2";
 
         public Level2State(long requiredScore, long maxMoves) {
             this.requiredScore = requiredScore;
             this.maxMoves = maxMoves;
+        }
+
+        @Override
+        public String getType(){
+            return type;
         }
 
         public boolean gameOver() {

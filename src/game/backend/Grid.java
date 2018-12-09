@@ -32,10 +32,14 @@ public abstract class Grid {
 		return g;
 	}
 	
-	protected GameState state(){
+	public GameState state(){
 		return state;
 	}
-	
+
+	public Cell getFirstCell(int column){
+		return g()[0][column];
+	}
+
 	public void initialize() {
 		moveMaker = new MoveMaker(this);
 		figureDetector = new FigureDetector(this);
@@ -46,7 +50,8 @@ public abstract class Grid {
 			}
 		}
 		fillCells();
-		printGrid();
+		//printGrid();
+		System.out.println("------------------------------");
 		fallElements();
 	}	
 
@@ -77,7 +82,14 @@ public abstract class Grid {
 			int j = 0;
 			while (j < SIZE) {
 				if (g[i][j].isEmpty()) {
-					if (g[i][j].fallUpperContent()) {
+					if(state.getType().equals("LEVEL2") && j == 8 && i == 0){
+						if(g[i][j].fallUpperContentWithCondition(state)){ //que sea el ultimo lugar, necesito fruta si o si
+							i = SIZE;
+							j = -1;
+							break;
+						}
+					}
+					if (g[i][j].fallUpperContent(state)) {
 						i = SIZE;
 						j = -1;
 						break;
@@ -98,20 +110,22 @@ public abstract class Grid {
 	}
 	
 	public boolean tryMove(int i1, int j1, int i2, int j2) {
-		Move move = moveMaker.getMove(i1, j1, i2, j2);
-		if(move == null){
-			System.out.println("Retorno true");
-			return true;
-		}
-		swapContent(i1, j1, i2, j2);
-		if (move.isValid()) {
-			move.removeElements();
-			fallElements();
-			return true;
-		} else {
+		try {
+			Move move = moveMaker.getMove(i1, j1, i2, j2);
 			swapContent(i1, j1, i2, j2);
+			if (move.isValid()) {
+				move.removeElements();
+				fallElements();
+				return true;
+			} else {
+				swapContent(i1, j1, i2, j2);
+				return false;
+			}
+		} catch (NullPointerException e){
+			System.out.println("Invalid Move");
 			return false;
 		}
+
 	}	
 	
 	public Figure tryRemove(Cell cell) {

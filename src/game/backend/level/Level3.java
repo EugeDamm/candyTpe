@@ -7,8 +7,8 @@ import game.backend.element.Wall;
 
 public class Level3 extends Level1 {
 
-    private static int REQUIRED_FRUITS = 2;
-    private static int MAX_MOVES = 30;
+    private final static int REQUIRED_FRUITS = 2;
+    private final static int MAX_MOVES = 30;
     private CandyFruitGeneratorCell fruitGenCell;
     private GameState gameState;
     private Cell wallCell;
@@ -22,10 +22,16 @@ public class Level3 extends Level1 {
     public class Level3State extends GameState {
         private int requiredFruits;
         private int maxMoves;
+        private final String type = "LEVEL3";
 
         public Level3State(int requiredFruits, int maxMoves){
             this.requiredFruits = requiredFruits;
             this.maxMoves = maxMoves;
+        }
+
+        @Override
+        public String getType(){
+            return type;
         }
 
         public boolean gameOver() { return playerWon() || getMoves() >= maxMoves; }

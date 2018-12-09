@@ -6,6 +6,7 @@ public abstract class GameState {
 	private int moves = 0;
 	private int fruitsPresent = 0;
 	private int fruitsAchieved = 0;
+	private boolean frozen = false;
 	
 	public void addScore(long value) {
 		this.score = this.score + value;
@@ -23,6 +24,8 @@ public abstract class GameState {
 		return moves;
 	}
 
+	public abstract String getType();
+
 	public void addFruitPresent() { this.fruitsPresent++; }
 
 	public void addFruitsAchieved() { this.fruitsAchieved++;}
@@ -38,5 +41,13 @@ public abstract class GameState {
 	public abstract boolean playerWon();
 
 	public abstract long getMovesLeft();
+
+	public void freezeGame(){
+		frozen = true;
+	}
+
+	public boolean isFrozen(){
+		return frozen;
+	}
 
 }

@@ -23,5 +23,12 @@ public abstract class Element {
 	public long getScore() {
 		return 0;
 	}
-	
+
+	public boolean isFruit(){
+		return false;
+	}
+
+	public boolean isCandy(){
+		return false;
+	}
 }

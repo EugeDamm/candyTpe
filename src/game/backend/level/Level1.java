@@ -9,7 +9,7 @@ import game.backend.element.Wall;
 
 public class Level1 extends Grid {
 	
-	private static int REQUIRED_SCORE = 5000; 
+	private static int REQUIRED_SCORE = 5000;
 	private static int MAX_MOVES = 20; 
 	
 	private Cell wallCell;
@@ -60,20 +60,25 @@ public class Level1 extends Grid {
 
     @Override
     public boolean tryMove(int i1, int j1, int i2, int j2) {
-        boolean ret;
-        if (ret = super.tryMove(i1, j1, i2, j2)) {
+        boolean ret = super.tryMove(i1,j1,i2,j2);
+        if(ret)
             state().addMove();
-        }
         return ret;
     }
 
     private class Level1State extends GameState {
         private long requiredScore;
         private long maxMoves;
+        private final String type = "LEVEL1";
 
         public Level1State(long requiredScore, int maxMoves) {
             this.requiredScore = requiredScore;
             this.maxMoves = maxMoves;
+        }
+
+        @Override
+        public String getType(){
+            return type;
         }
 
         public boolean gameOver() {

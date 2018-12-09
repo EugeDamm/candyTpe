@@ -14,13 +14,22 @@ public class CandyFruitGeneratorCell extends CandyGeneratorCell {
     }
 
     @Override
+    public boolean isFruitGenerator(){
+        return true;
+    }
+
+    @Override
     public Element getContent() {
-        System.out.println("Fruits Present = " + gameState.getFruitsPresent());
-        if ( gameState.getFruitsPresent() == 0) {
+        //System.out.println("Fruits Present = " + gameState.getFruitsPresent());
+        if (gameState.getFruitsPresent() == 0) {
             int i = (int)(Math.random() * (CandyColor.values().length + 1));
-            if (i < CandyColor.values().length) { return new Candy(CandyColor.values()[i]); }
+            if (i < CandyColor.values().length) {
+                return new Candy(CandyColor.values()[i]); }
             gameState.addFruitPresent();
-            return new Cherry();
+            i = (int)(Math.random() * CandyColor.values().length);
+            if(i % 2 == 0)
+                return new Cherry();
+            return new Nut();
         }
         return super.getContent();
     }

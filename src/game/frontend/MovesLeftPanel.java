@@ -10,6 +10,8 @@ public class MovesLeftPanel extends BorderPane {
     private long movesLeft;
     private final String message = "Moves left: ";
 
+
+
     public MovesLeftPanel(long movesLeft){
         this.movesLeft = movesLeft;
         setStyle("-fx-background-color: #5490ff");

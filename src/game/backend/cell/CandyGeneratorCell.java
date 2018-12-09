@@ -1,5 +1,6 @@
 package game.backend.cell;
 
+import game.backend.GameState;
 import game.backend.Grid;
 import game.backend.element.Candy;
 import game.backend.element.CandyColor;
@@ -33,7 +34,7 @@ public class CandyGeneratorCell extends Cell {
 	}
 
 	@Override
-	public boolean fallUpperContent() {
+	public boolean fallUpperContent(GameState state) {
 		throw new IllegalStateException();
 	}
 	
@@ -44,6 +45,11 @@ public class CandyGeneratorCell extends Cell {
 	
 	@Override
 	public boolean equals(Object obj) {
+		return false;
+	}
+
+	@Override
+	public boolean isFruitGenerator(){
 		return false;
 	}
 
