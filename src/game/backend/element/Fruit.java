@@ -1,25 +1,10 @@
 package game.backend.element;
 
-public class Fruit extends Element{
-
-    public Fruit(){
-
-    }
-
-    public Fruit(FruitType type){
-
-    }
+public abstract class Fruit extends Element {
 
     @Override
     public boolean isMovable() {
-        return false;
+        return true;
     }
 
-    @Override
-    public String getKey() {
-        return null;
-    }
-
-    //TODO completar la clase
 }
-

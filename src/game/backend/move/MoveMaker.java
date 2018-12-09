@@ -1,11 +1,7 @@
 package game.backend.move;
 
 import game.backend.Grid;
-import game.backend.element.Bomb;
-import game.backend.element.Candy;
-import game.backend.element.HorizontalStripedCandy;
-import game.backend.element.VerticalStripedCandy;
-import game.backend.element.WrappedCandy;
+import game.backend.element.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -54,6 +50,12 @@ public class MoveMaker {
 	}
 	
 	public Move getMove(int i1, int j1, int i2, int j2) {
+		System.out.println(grid.get(i1, j1).getKey());
+		System.out.println(grid.get(i2, j2).getKey());
+		if(grid.get(i1, j1).getKey().equals("GAP") || grid.get(i2, j2).getKey().equals("GAP")){
+			System.out.println("Retorno null");
+			return null;
+		}
 		Move move = map.get(grid.get(i1, j1).getKey() + grid.get(i2, j2).getKey());
 		move.setCoords(i1, j1, i2, j2);
 		return move;

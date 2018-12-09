@@ -8,8 +8,8 @@ import game.backend.move.Direction;
 public class Cell {
 	
 	private Grid grid;
-	private Cell[] around = new Cell[Direction.values().length];
-	private Element content;
+	protected Cell[] around = new Cell[Direction.values().length];
+	protected Element content;
 	
 	public Cell(Grid grid) {
 		this.grid = grid;
@@ -25,6 +25,13 @@ public class Cell {
 	public Cell[] getAround(){
 		return around;
 	}
+
+	/*public void printAround(){
+		System.out.println("[" + around[0].getContent().getKey() + "," +
+				around[1].getContent().getKey() + "," +
+				around[2].getContent().getKey() + "," +
+				around[3].getContent().getKey() + "]");
+	}*/
 
 	public void setAround(Cell up, Cell down, Cell left, Cell right) {
 		this.around[Direction.UP.ordinal()] = up;
@@ -84,10 +91,13 @@ public class Cell {
 
 	public boolean fallUpperContent() {
 		Cell up = around[Direction.UP.ordinal()];
+		while(!up.getContent().getKey().equals("CANDY")) {
+			up = up.around[Direction.UP.ordinal()];
+		}
 		if (this.isEmpty() && !up.isEmpty() && up.isMovable()) {
 			this.content = up.getAndClearContent();
 			grid.wasUpdated();
-			if (this.hasFloor()) {
+			if(this.hasFloor()) {
 				grid.tryRemove(this);
 				return true;
 			} else {
@@ -97,7 +107,7 @@ public class Cell {
 		} 
 		return false;
 	}
-	
+
 	public void setContent(Element content) {
 		this.content = content;
 	}

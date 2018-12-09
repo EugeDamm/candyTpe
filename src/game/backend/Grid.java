@@ -18,12 +18,12 @@ public abstract class Grid {
 	
 	public static final int SIZE = 9;
 
-	private Cell[][] g = new Cell[SIZE][SIZE];
-	private Map<Cell, Point> gMap = new HashMap<>();
-	private GameState state;
-	private List<GameListener> listeners = new ArrayList<>();
-	private MoveMaker moveMaker;
-	private FigureDetector figureDetector;
+	protected Cell[][] g = new Cell[SIZE][SIZE];
+	protected Map<Cell, Point> gMap = new HashMap<>();
+	protected GameState state;
+	protected List<GameListener> listeners = new ArrayList<>();
+	protected MoveMaker moveMaker;
+	protected FigureDetector figureDetector;
 	
 	protected abstract GameState newState();
 	protected abstract void fillCells();
@@ -53,11 +53,11 @@ public abstract class Grid {
 	public void printGrid(){
 		for(int i = 0 ; i < 9 ; i++){
 			for(int j = 0 ; j < 9 ; j++){
-				System.out.println(String.format("Element: %d, %d", i, j));
-				System.out.println("up:" + g()[i][j].getAround()[Direction.UP.ordinal()]);
-				System.out.println("down:" + g()[i][j].getAround()[Direction.DOWN.ordinal()]);
-				System.out.println("left:" + g()[i][j].getAround()[Direction.LEFT.ordinal()]);
-				System.out.println("right:" + g()[i][j].getAround()[Direction.RIGHT.ordinal()]);
+				System.out.println(String.format("Element - %s -: %d, %d",g()[i][j].getContent().getKey(), i, j));
+				System.out.println(String.format("up: %s", g()[i][j].getAround()[Direction.UP.ordinal()].getContent().getKey()));
+				System.out.println(String.format("down: %s", g()[i][j].getAround()[Direction.DOWN.ordinal()].getContent().getKey()));
+				System.out.println(String.format("left: %s", g()[i][j].getAround()[Direction.LEFT.ordinal()].getContent().getKey()));
+				System.out.println(String.format("right: %s", g()[i][j].getAround()[Direction.RIGHT.ordinal()].getContent().getKey()));
 			}
 			System.out.println("\n");
 		}
@@ -99,6 +99,10 @@ public abstract class Grid {
 	
 	public boolean tryMove(int i1, int j1, int i2, int j2) {
 		Move move = moveMaker.getMove(i1, j1, i2, j2);
+		if(move == null){
+			System.out.println("Retorno true");
+			return true;
+		}
 		swapContent(i1, j1, i2, j2);
 		if (move.isValid()) {
 			move.removeElements();

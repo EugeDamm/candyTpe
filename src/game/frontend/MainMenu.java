@@ -146,7 +146,6 @@ public class MainMenu extends Application {
                 selectedOption = getMenuItem(currentOption).text.getText();
                 GameApp gameApp = new GameApp(selectedOption);
                 gameApp.start(primaryStage);
-
             }
         });
         primaryStage.setScene(scene);
