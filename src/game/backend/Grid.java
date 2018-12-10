@@ -82,7 +82,7 @@ public abstract class Grid {
 			int j = 0;
 			while (j < SIZE) {
 				if (g[i][j].isEmpty()) {
-					if(state.getType().equals("LEVEL2") && j == 8 && i == 0){
+					if(state.getType().equals("LEVEL3") && j == 8 && i == 0){
 						if(g[i][j].fallUpperContentWithCondition(state)){ //que sea el ultimo lugar, necesito fruta si o si
 							i = SIZE;
 							j = -1;

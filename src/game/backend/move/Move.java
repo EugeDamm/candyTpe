@@ -35,7 +35,8 @@ public abstract class Move {
 	}
 	
 	protected void clearContent(int i, int j) {
-		grid.clearContent(i, j);
+		if(!get(i,j).getKey().equals("CHERRY") && !get(i,j).getKey().equals("NUT"))
+			grid.clearContent(i, j);
 	}
 	
 	protected void setContent(int i, int j, Element e){

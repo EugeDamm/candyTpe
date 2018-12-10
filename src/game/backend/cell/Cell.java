@@ -119,7 +119,7 @@ public class Cell {
 
 	public boolean fallUpperContent(GameState state) {
 		Cell up = around[Direction.UP.ordinal()];
-		if(state.getType().equals("LEVEL3")) {
+		if(state.getType().equals("LEVEL2")) {
 			while (!up.getContent().getKey().equals("CANDY")) {
 				up = up.around[Direction.UP.ordinal()];
 			}
