@@ -16,10 +16,6 @@ public class Level2 extends Level1 {
     private final static int REQUIRED_SCORE = 3000;
     private final static int MAX_MOVES = 20;
 
-    private Cell gapCell;
-    private Cell wallCell;
-    private Cell candyGenCell;
-
     @Override
     public void initialize(){
         moveMaker = new MoveMaker(this);
@@ -34,7 +30,6 @@ public class Level2 extends Level1 {
             }
         }
         fillCells();
-        //printGrid();
         fallElements();
     }
 

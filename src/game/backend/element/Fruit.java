@@ -12,4 +12,7 @@ public abstract class Fruit extends Element {
         return true;
     }
 
+    @Override
+    public boolean isExplodable() { return false; }
+
 }
