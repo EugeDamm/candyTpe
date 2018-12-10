@@ -4,6 +4,8 @@ import game.backend.cell.Cell;
 import game.backend.element.Candy;
 import game.backend.element.CandyColor;
 import game.backend.element.Element;
+import game.backend.element.Fruit;
+import game.backend.level.Level3;
 import game.backend.move.Direction;
 import game.backend.move.Move;
 import game.backend.move.MoveMaker;
@@ -52,21 +54,15 @@ public abstract class Grid {
 		fillCells();
 		//printGrid();
 		System.out.println("------------------------------");
-		fallElements();
-	}	
-
-	public void printGrid(){
-		for(int i = 0 ; i < 9 ; i++){
-			for(int j = 0 ; j < 9 ; j++){
-				System.out.println(String.format("Element - %s -: %d, %d",g()[i][j].getContent().getKey(), i, j));
-				System.out.println(String.format("up: %s", g()[i][j].getAround()[Direction.UP.ordinal()].getContent().getKey()));
-				System.out.println(String.format("down: %s", g()[i][j].getAround()[Direction.DOWN.ordinal()].getContent().getKey()));
-				System.out.println(String.format("left: %s", g()[i][j].getAround()[Direction.LEFT.ordinal()].getContent().getKey()));
-				System.out.println(String.format("right: %s", g()[i][j].getAround()[Direction.RIGHT.ordinal()].getContent().getKey()));
-			}
-			System.out.println("\n");
-		}
+        fallElements();
+		if (state instanceof Level3.Level3State) {
+		    setFruitGeneratorCells();
+        }
 	}
+
+	public void setFruitGeneratorCells() {
+	    //
+    }
 
 	public Element get(int i, int j) {
 		return g[i][j].getContent();
@@ -82,13 +78,13 @@ public abstract class Grid {
 			int j = 0;
 			while (j < SIZE) {
 				if (g[i][j].isEmpty()) {
-					if(state.getType().equals("LEVEL2") && j == 8 && i == 0){
-						if(g[i][j].fallUpperContentWithCondition(state)){ //que sea el ultimo lugar, necesito fruta si o si
-							i = SIZE;
-							j = -1;
-							break;
-						}
-					}
+//					if(state.getType().equals("LEVEL3") && j == 8 && i == 0){
+//						if(g[i][j].fallUpperContentWithCondition(state)){ //que sea el ultimo lugar, necesito fruta si o si
+//							i = SIZE;
+//							j = -1;
+//							break;
+//						}
+//					}
 					if (g[i][j].fallUpperContent(state)) {
 						i = SIZE;
 						j = -1;
@@ -110,23 +106,36 @@ public abstract class Grid {
 	}
 	
 	public boolean tryMove(int i1, int j1, int i2, int j2) {
-		try {
-			Move move = moveMaker.getMove(i1, j1, i2, j2);
-			swapContent(i1, j1, i2, j2);
-			if (move.isValid()) {
-				move.removeElements();
-				fallElements();
-				return true;
-			} else {
-				swapContent(i1, j1, i2, j2);
-				return false;
-			}
-		} catch (NullPointerException e){
-			System.out.println("Invalid Move");
-			return false;
-		}
+        try {
+            Move move = moveMaker.getMove(i1, j1, i2, j2);
+            swapContent(i1, j1, i2, j2);
+            if (move.isValid()) {
+                move.removeElements();
+                fallElements();
+                if (state instanceof Level3.Level3State) { checkFruitOnFloor(); }
+                return true;
+            } else {
+                swapContent(i1, j1, i2, j2);
+                return false;
+            }
+        } catch (NullPointerException e) {
+            System.out.println("Invalid Move");
+            return false;
+        }
 
-	}	
+    }
+
+    public void checkFruitOnFloor() {
+        for (int j = 0; j < SIZE - 1; j++) {
+            if (g[SIZE - 1][j].getContent() instanceof Fruit) {
+                g[SIZE - 1][j].clearFruit();
+                fallElements();
+                state.removeFruitPresent();
+                state.addFruitsAchieved();
+                fallElements();
+            }
+        }
+    }
 	
 	public Figure tryRemove(Cell cell) {
 		if (gMap.containsKey(cell)) {

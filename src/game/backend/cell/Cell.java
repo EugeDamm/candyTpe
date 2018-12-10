@@ -12,8 +12,8 @@ public class Cell {
 	private Grid grid;
 	protected Cell[] around = new Cell[Direction.values().length];
 	protected Element content;
-	
-	public Cell(Grid grid) {
+
+    public Cell(Grid grid) {
 		this.grid = grid;
 		this.content = new Nothing();
 	}
@@ -26,13 +26,6 @@ public class Cell {
 
 	public Cell[] getAround(){
 		return around;
-	}
-
-	public void printAround(){
-		System.out.println("[" + around[0].getContent().getKey() + "," +
-				around[1].getContent().getKey() + "," +
-				around[2].getContent().getKey() + "," +
-				around[3].getContent().getKey() + "]");
 	}
 
 	public void setAround(Cell up, Cell down, Cell left, Cell right) {
@@ -57,18 +50,28 @@ public class Cell {
 	public Element getContent() {
 		return content;
 	}
+
+	public Element getContentWithoutFruit() { return getContent(); }
 	
 	public void clearContent() {
-		if (content.isMovable()) {
-			Direction[] explosionCascade = content.explode();
-			grid.cellExplosion(content);
-			this.content = new Nothing();
-			if (explosionCascade != null) {
-				expandExplosion(explosionCascade); 
-			}
-			this.content = new Nothing();
-		}
-	}
+        if (content.isMovable() && content.isExplodable()) {
+            clearCell();
+        }
+    }
+
+	private void clearCell() {
+        Direction[] explosionCascade = content.explode();
+        grid.cellExplosion(content);
+        this.content = new Nothing();
+        if (explosionCascade != null) {
+            expandExplosion(explosionCascade);
+        }
+        this.content = new Nothing();
+    }
+
+    public void clearFruit() {
+        clearCell();
+    }
 	
 	private void expandExplosion(Direction[] explosion) {
 		for(Direction d: explosion) {
@@ -119,7 +122,7 @@ public class Cell {
 
 	public boolean fallUpperContent(GameState state) {
 		Cell up = around[Direction.UP.ordinal()];
-		if(state.getType().equals("LEVEL3")) {
+		if(state.getType().equals("LEVEL2")) {
 			while (!up.getContent().getKey().equals("CANDY")) {
 				up = up.around[Direction.UP.ordinal()];
 			}

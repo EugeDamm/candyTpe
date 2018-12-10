@@ -3,6 +3,7 @@ package game.backend;
 import game.backend.element.Candy;
 import game.backend.element.CandyColor;
 import game.backend.element.Element;
+import game.backend.element.Fruit;
 
 import java.awt.Point;
 

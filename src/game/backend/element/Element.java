@@ -31,4 +31,6 @@ public abstract class Element {
 	public boolean isCandy(){
 		return false;
 	}
+
+    public boolean isExplodable() { return true; }
 }

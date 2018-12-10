@@ -20,7 +20,6 @@ public class CandyFruitGeneratorCell extends CandyGeneratorCell {
 
     @Override
     public Element getContent() {
-        //System.out.println("Fruits Present = " + gameState.getFruitsPresent());
         if (gameState.getFruitsPresent() == 0) {
             int i = (int)(Math.random() * (CandyColor.values().length + 1));
             if (i < CandyColor.values().length) {

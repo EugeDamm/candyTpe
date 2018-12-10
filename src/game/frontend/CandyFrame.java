@@ -2,9 +2,11 @@ package game.frontend;
 
 import game.backend.CandyGame;
 import game.backend.GameListener;
+import game.backend.GameState;
 import game.backend.cell.Cell;
 import game.backend.element.Element;
 
+import game.backend.level.Level3;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Point2D;
@@ -30,7 +32,7 @@ public class CandyFrame extends VBox {
 		images = new ImageManager();
 		boardPanel = new BoardPanel(game.getSize(), game.getSize(), CELL_SIZE);
 		getChildren().add(boardPanel);
-		scorePanel = new ScorePanel();
+		scorePanel = new ScorePanel(game);
 		getChildren().add(scorePanel);
 		game.initGame();
 		movesLeftPanel = new MovesLeftPanel(game.getMovesLeft());
@@ -47,7 +49,7 @@ public class CandyFrame extends VBox {
 						int finalI = i;
 						int finalJ = j;
 						Cell cell = CandyFrame.this.game.get(i, j);
-						Element element = cell.getContent();
+						Element element = cell.getContentWithoutFruit();
 						Image image = images.getImage(element);
 						timeLine.getKeyFrames().add(new KeyFrame(frameTime, e -> boardPanel.setImage(finalI, finalJ, null)));
 						timeLine.getKeyFrames().add(new KeyFrame(frameTime, e -> boardPanel.setImage(finalI, finalJ, image)));
@@ -73,11 +75,11 @@ public class CandyFrame extends VBox {
 				if (newPoint != null) {
 					System.out.println("Get second = " +  newPoint);
 					if(!game().getState().isFrozen()){
-						boolean ret = game().tryMove((int)lastPoint.getX(), (int)lastPoint.getY(), (int)newPoint.getX(), (int)newPoint.getY());
+					    boolean ret = game().tryMove((int)lastPoint.getX(), (int)lastPoint.getY(), (int)newPoint.getX(), (int)newPoint.getY());
 						String message = ((Long)game().getScore()).toString();
 						if (game().isFinished()) {
 							game().getState().freezeGame();
-							if (game().playerWon()) {
+                            if (game().playerWon()) {
 								message = message + " Finished - Player Won!";
 							} else {
 								message = message + " Finished - Loser !";
@@ -85,6 +87,11 @@ public class CandyFrame extends VBox {
 						}
 						if(ret) {
 							movesLeftPanel.updateMoves();
+							if (game.getState() instanceof Level3.Level3State && !game().isFinished()) {
+							    GameState state = game.getState();
+							    message = String.format("Frutas obtenidas = %d de %d",
+                                        state.getFruitsAchieved(), state.getRequiredFruits());
+                            }
 							scorePanel.updateScore(message);
 						}
 					}
