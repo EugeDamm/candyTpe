@@ -18,6 +18,7 @@ public class GameApp extends Application {
 
 	public GameApp(String selectedOption){
 		System.out.println(selectedOption);
+		
 		if(selectedOption.equals("NIVEL 1")){
 			chosenClass = Level1.class;
 		} else if(selectedOption.equals("NIVEL 2")) {
