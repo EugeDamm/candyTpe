@@ -36,22 +36,25 @@ public class MainMenu extends Application {
     private Parent createContent(){
         Pane root = new Pane();
         root.setPrefSize(width, height);
-
+        VBox infoBox = new VBox();
+        infoBox.getChildren().addAll(new AppMenu());
+        infoBox.setTranslateY(0);
+        infoBox.setTranslateX(0);
         HBox welcomeBox = new HBox(10);
-        Label welcomeText = new Label("Let's play Candy Crush!\n    Choose any level");
+        Label welcomeText = new Label("Juguemos Candy Crush!\n         Elegí un nivel");
         welcomeText.setFont(FONT);
-        welcomeText.setAlignment(Pos.TOP_CENTER);
+        welcomeText.setAlignment(Pos.CENTER);
         welcomeText.setEffect(new GaussianBlur(2));
-        welcomeBox.setTranslateX(28);
-        welcomeBox.setTranslateY(0);
+        welcomeBox.setTranslateX(25);
+        welcomeBox.setTranslateY(30);
         welcomeBox.getChildren().addAll(welcomeText);
 
         MenuItem exitItem = new MenuItem("EXIT");
         exitItem.setOnActivate(() -> System.exit(0));
 
-        MenuItem level1 = new MenuItem("LEVEL 1");
-        MenuItem level2 = new MenuItem("LEVEL 2");
-        MenuItem level3 = new MenuItem("LEVEL 3");
+        MenuItem level1 = new MenuItem("NIVEL 1");
+        MenuItem level2 = new MenuItem("NIVEL 2");
+        MenuItem level3 = new MenuItem("NIVEL 3");
 
         menuBox = new VBox(10,
                 level1,
@@ -60,10 +63,10 @@ public class MainMenu extends Application {
                 exitItem);
         menuBox.setAlignment(Pos.TOP_CENTER);
         menuBox.setTranslateX(70);
-        menuBox.setTranslateY(70);
+        menuBox.setTranslateY(90);
 
         getMenuItem(0).setActive(true);
-        root.getChildren().addAll(welcomeBox,menuBox);
+        root.getChildren().addAll(infoBox,welcomeBox,menuBox);
         return root;
 
     }
