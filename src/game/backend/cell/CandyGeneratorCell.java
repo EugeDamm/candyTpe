@@ -7,7 +7,7 @@ import game.backend.element.CandyColor;
 import game.backend.element.Element;
 
 public class CandyGeneratorCell extends Cell {
-	
+
 	public CandyGeneratorCell(Grid grid) {
 		super(grid);
 	}

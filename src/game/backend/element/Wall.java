@@ -12,4 +12,7 @@ public class Wall extends Element {
 		return "WALL";
 	}
 
+    @Override
+    public boolean isExplodable() { return false; }
+
 }
