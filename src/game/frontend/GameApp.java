@@ -17,9 +17,10 @@ public class GameApp extends Application {
 	private Class<?> chosenClass;
 
 	public GameApp(String selectedOption){
-		if(selectedOption.equals("LEVEL 1")){
+		System.out.println(selectedOption);
+		if(selectedOption.equals("NIVEL 1")){
 			chosenClass = Level1.class;
-		} else if(selectedOption.equals("LEVEL 2")) {
+		} else if(selectedOption.equals("NIVEL 2")) {
 			chosenClass = Level2.class;
 		} else {
 			chosenClass = Level3.class;
@@ -32,7 +33,6 @@ public class GameApp extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
-		System.out.println(chosenClass);
 		CandyGame game = new CandyGame(chosenClass);
 		CandyFrame frame = new CandyFrame(game);
 		Scene scene = new Scene(frame);
