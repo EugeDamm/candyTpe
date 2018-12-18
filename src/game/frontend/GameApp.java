@@ -15,15 +15,10 @@ import java.awt.event.ActionEvent;
 public class GameApp extends Application {
 
 	private Class<?> chosenClass;
+    private Stage primaryStage;
 
-	public GameApp(String selectedOption){
-		if(selectedOption.equals("LEVEL 1")){
-			chosenClass = Level1.class;
-		} else if(selectedOption.equals("LEVEL 2")) {
-			chosenClass = Level2.class;
-		} else {
-			chosenClass = Level3.class;
-		}
+	public GameApp(Level chosenLevel){
+	    chosenClass = chosenLevel.getClazz();
 	}
 
 	public static void main(String[] args) {
@@ -33,12 +28,17 @@ public class GameApp extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		System.out.println(chosenClass);
+		this.primaryStage = primaryStage;
 		CandyGame game = new CandyGame(chosenClass);
-		CandyFrame frame = new CandyFrame(game);
+		CandyFrame frame = new CandyFrame(this, game);
 		Scene scene = new Scene(frame);
 		primaryStage.setResizable(false);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
 
+    public void closeCurrentWindow(){
+        this.primaryStage.close();
+    }
 }
+

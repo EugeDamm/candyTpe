@@ -4,6 +4,7 @@ import game.backend.CandyGame;
 import game.backend.GameListener;
 import game.backend.GameState;
 import game.backend.cell.Cell;
+import game.backend.element.Candy;
 import game.backend.element.Element;
 
 import game.backend.level.Level3;
@@ -13,6 +14,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class CandyFrame extends VBox {
@@ -26,9 +28,9 @@ public class CandyFrame extends VBox {
 	private Point2D lastPoint;
 	private CandyGame game;
 
-	public CandyFrame(CandyGame game) {
+	public CandyFrame(GameApp app, CandyGame game) {
 		this.game = game;
-		getChildren().add(new AppMenu());
+		getChildren().add(new AppMenu(app));
 		images = new ImageManager();
 		boardPanel = new BoardPanel(game.getSize(), game.getSize(), CELL_SIZE);
 		getChildren().add(boardPanel);
@@ -89,7 +91,7 @@ public class CandyFrame extends VBox {
 							movesLeftPanel.updateMoves();
 							if (game.getState() instanceof Level3.Level3State && !game().isFinished()) {
 							    GameState state = game.getState();
-							    message = String.format("Frutas obtenidas = %d de %d",
+							    message = String.format("Fruits obtained = %d out of %d",
                                         state.getFruitsAchieved(), state.getRequiredFruits());
                             }
 							scorePanel.updateScore(message);

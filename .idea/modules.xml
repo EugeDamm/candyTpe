@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/candyTpe.iml" filepath="$PROJECT_DIR$/candyTpe.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CandyCrush.iml" filepath="$PROJECT_DIR$/CandyCrush.iml" />
     </modules>
   </component>
 </project>
