@@ -52,9 +52,9 @@ public abstract class Grid {
 			}
 		}
 		fillCells();
-		//printGrid();
 		System.out.println("------------------------------");
         fallElements();
+        //TODO dont use instanceof, state should know that info by itself
 		if (state instanceof Level3.Level3State) {
 		    setFruitGeneratorCells();
         }
@@ -105,6 +105,7 @@ public abstract class Grid {
             if (move.isValid()) {
                 move.removeElements();
                 fallElements();
+                //TODO remove instanceof
                 if (state instanceof Level3.Level3State) { checkFruitOnFloor(); }
                 return true;
             } else {
@@ -120,6 +121,7 @@ public abstract class Grid {
 
     public void checkFruitOnFloor() {
         for (int j = 0; j < SIZE - 1; j++) {
+        	//TODO remove instanceof
             if (g[SIZE - 1][j].getContent() instanceof Fruit) {
                 g[SIZE - 1][j].clearFruit();
                 fallElements();

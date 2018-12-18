@@ -98,7 +98,7 @@ public class Cell {
 		return false;
 	}
 
-	public boolean fallUpperContentWithCondition(GameState state){
+	/*public boolean fallUpperContentWithCondition(GameState state){
 		Cell up = around[Direction.UP.ordinal()];
 		if(state.getFruitsPresent() == 0){
 			if(this.isEmpty() && !up.isEmpty() && up.isMovable()){
@@ -118,10 +118,11 @@ public class Cell {
 			}
 		}
 		return fallUpperContent(state);
-	}
+	}*/
 
 	public boolean fallUpperContent(GameState state) {
 		Cell up = around[Direction.UP.ordinal()];
+		//TODO state should know that info by itself
 		if(state.getType().equals("LEVEL2")) {
 			while (!up.getContent().getKey().equals("CANDY")) {
 				up = up.around[Direction.UP.ordinal()];

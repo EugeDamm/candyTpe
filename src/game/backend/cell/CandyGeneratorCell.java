@@ -34,21 +34,6 @@ public class CandyGeneratorCell extends Cell {
 	}
 
 	@Override
-	public boolean fallUpperContent(GameState state) {
-		throw new IllegalStateException();
-	}
-	
-	@Override
-	public void setContent(Element content) {
-		throw new IllegalStateException();
-	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		return false;
-	}
-
-	@Override
 	public boolean isFruitGenerator(){
 		return false;
 	}
